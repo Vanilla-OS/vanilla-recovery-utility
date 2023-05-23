@@ -1,0 +1,6 @@
+data/org.vanillaos.RecoveryUtility.desktop.in
+data/org.vanillaos.RecoveryUtility.appdata.xml.in
+data/org.vanillaos.RecoveryUtility.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

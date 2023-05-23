@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=recovery-utility
+Exec=recovery-utility
+Icon=org.vanillaos.RecoveryUtility
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
