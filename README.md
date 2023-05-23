@@ -5,10 +5,6 @@
 
 <div align="center">
 
-[![Translation Status][weblate-image]][weblate-url]
-
-[weblate-url]: https://hosted.weblate.org/engage/vanilla-os/
-
 <p>Utility to recover the system to its original state.</p>
 <br />
 <img src="data/screenshot.png">
