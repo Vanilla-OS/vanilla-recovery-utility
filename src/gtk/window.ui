@@ -7,27 +7,80 @@
     <property name="title">Vanilla OS Recovery</property>
     <child>
       <object class="GtkBox">
-        <property name="orientation">1</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="AdwHeaderBar">
-            <property name="title-widget">
-              <object class="AdwViewSwitcher">
-                <property name="stack">stack_main</property>
-              </object>
-            </property>
-            <style>
-              <class name="flat"/>
-            </style>
+          <object class="AdwHeaderBar" id="headerbar">
           </object>
         </child>
         <child>
           <object class="AdwViewStack" id="stack_main">
             <property name="vexpand">true</property>
             <property name="hexpand">true</property>
+            
             <child>
               <object class="AdwViewStackPage">
-                <property name="title">Welcome</property>
-                <property name="icon-name">dot</property>
+                <property name="name">disclaimer</property>
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-top">10</property>
+                    <property name="margin-bottom">20</property>
+                    <property name="margin-start">20</property>
+                    <property name="margin-end">20</property>
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="hexpand">true</property>
+                        <property name="vexpand">true</property>
+                        <child>
+                          <object class="GtkTextView">
+                            <property name="editable">False</property>
+                            <property name="cursor_visible">False</property>
+                            <property name="wrap_mode">word</property>
+                            <property name="buffer">
+                              <object class="GtkTextBuffer" id="buffer_disclaimer">
+                                <property name="text">
+DISCLAIMER_GOES_HERE
+                                </property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="spacing">10</property>
+                        <property name="halign">center</property>
+                        <property name="margin-top">20</property>
+                        <child>
+                          <object class="GtkButton" id="btn_disclaimer_cancel">
+                            <property name="label" translatable="true">Cancel</property>
+                            <property name="halign">3</property>
+                            <style>
+                              <class name="pill"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_disclaimer_agree">
+                            <property name="label" translatable="true">Agree</property>
+                            <property name="halign">3</property>
+                            <style>
+                              <class name="pill"/>
+                              <class name="suggested-action"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">welcome</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="icon-name">org.vanillaos.RecoveryUtility</property>
@@ -38,9 +91,19 @@
                         <child>
                           <object class="AdwPreferencesGroup">
                             <child>
-                              <object class="AdwActionRow">
+                              <object class="AdwActionRow" id="row_reset">
                                 <property name="title">Reinstall Vanilla OS</property>
                                 <property name="subtitle">This will reinstall Vanilla OS preserving your apps and personal data.</property>
+                                <property name="activatable-widget">btn_reset</property>
+                                <child type="suffix">
+                                  <object class="GtkButton" id="btn_reset">
+                                    <property name="icon-name">go-next-symbolic</property>
+                                    <property name="valign">center</property>
+                                    <style>
+                                      <class name="flat"/>
+                                    </style>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                             <child>
@@ -48,27 +111,67 @@
                                 <property name="title">Advanced Utilities</property>
                                 <property name="subtitle">Those utilities can be used for advanced tasks like partitioning.</property>
                                 <child>
-                                  <object class="AdwActionRow">
+                                  <object class="AdwActionRow" id="row_disks">
                                     <property name="title">Disks Utility</property>
                                     <property name="subtitle">Manage disks and partitions.</property>
+                                    <property name="activatable-widget">btn_disks</property>
+                                    <child type="suffix">
+                                      <object class="GtkButton" id="btn_disks">
+                                        <property name="icon-name">go-next-symbolic</property>
+                                        <property name="valign">center</property>
+                                        <style>
+                                          <class name="flat"/>
+                                        </style>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="AdwActionRow">
+                                  <object class="AdwActionRow" id="row_shell">
                                     <property name="title">Rescue Shell</property>
                                     <property name="subtitle">Launch a rescue shell in your system.</property>
+                                    <property name="activatable-widget">btn_shell</property>
+                                    <child type="suffix">
+                                      <object class="GtkButton" id="btn_shell">
+                                        <property name="icon-name">go-next-symbolic</property>
+                                        <property name="valign">center</property>
+                                        <style>
+                                          <class name="flat"/>
+                                        </style>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="AdwActionRow">
+                                  <object class="AdwActionRow" id="row_browser">
                                     <property name="title">Web Browser</property>
                                     <property name="subtitle">Read the documentation and search for solutions online.</property>
+                                    <property name="activatable-widget">btn_browser</property>
+                                    <child type="suffix">
+                                      <object class="GtkButton" id="btn_browser">
+                                        <property name="icon-name">go-next-symbolic</property>
+                                        <property name="valign">center</property>
+                                        <style>
+                                          <class name="flat"/>
+                                        </style>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="AdwActionRow">
+                                  <object class="AdwActionRow" id="row_fsck">
                                     <property name="title">Repair File System</property>
                                     <property name="subtitle">Check and repair the file system using "fsck".</property>
+                                    <property name="activatable-widget">btn_fsck</property>
+                                    <child type="suffix">
+                                      <object class="GtkButton" id="btn_fsck">
+                                        <property name="icon-name">go-next-symbolic</property>
+                                        <property name="valign">center</property>
+                                        <style>
+                                          <class name="flat"/>
+                                        </style>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
@@ -81,10 +184,10 @@
                 </property>
               </object>
             </child>
+
             <child>
               <object class="AdwViewStackPage">
-                <property name="title">Reinstall</property>
-                <property name="icon-name">dot</property>
+                <property name="name">reset</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="icon-name">view-refresh-symbolic</property>
@@ -95,7 +198,7 @@
                         <property name="halign">3</property>
                         <property name="spacing">10</property>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="btn_reset_cancel">
                             <property name="label" translatable="true">Cancel</property>
                             <property name="halign">3</property>
                             <style>
@@ -104,7 +207,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="btn_reset_confirm">
                             <property name="label" translatable="true">Reinstall</property>
                             <property name="halign">3</property>
                             <style>
@@ -119,10 +222,10 @@
                 </property>
               </object>
             </child>
+
             <child>
               <object class="AdwViewStackPage">
-                <property name="title">OK</property>
-                <property name="icon-name">dot</property>
+                <property name="name">completed</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="icon-name">object-select-symbolic</property>
@@ -133,7 +236,7 @@
                         <property name="halign">3</property>
                         <property name="spacing">10</property>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="btn_completed_cancel">
                             <property name="label" translatable="true">Cancel</property>
                             <property name="halign">3</property>
                             <style>
@@ -142,7 +245,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="btn_completed_restart">
                             <property name="label" translatable="true">Restart</property>
                             <property name="halign">3</property>
                             <style>
@@ -157,10 +260,10 @@
                 </property>
               </object>
             </child>
+
             <child>
               <object class="AdwViewStackPage">
-                <property name="title">FAIL</property>
-                <property name="icon-name">dot</property>
+                <property name="name">fail</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="icon-name">emblem-important-symbolic</property>
@@ -171,7 +274,7 @@
                         <property name="halign">3</property>
                         <property name="spacing">10</property>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="btn_fail_cancel">
                             <property name="label" translatable="true">Return to Recovery</property>
                             <property name="halign">3</property>
                             <style>
@@ -185,6 +288,7 @@
                 </property>
               </object>
             </child>
+
           </object>
         </child>
       </object>

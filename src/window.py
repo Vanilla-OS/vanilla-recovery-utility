@@ -24,5 +24,42 @@ from gi.repository import Gtk
 class RecoveryUtilityWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'RecoveryUtilityWindow'
 
+    stack_main: Adw.ViewStack = Gtk.Template.Child()
+    headerbar: Adw.HeaderBar = Gtk.Template.Child()
+
+    btn_disclaimer_cancel: Gtk.Button = Gtk.Template.Child()
+    btn_disclaimer_agree: Gtk.Button = Gtk.Template.Child()
+
+    btn_reset: Gtk.Button = Gtk.Template.Child()
+    btn_disks: Gtk.Button = Gtk.Template.Child()
+    btn_shell: Gtk.Button = Gtk.Template.Child()
+    btn_browser: Gtk.Button = Gtk.Template.Child()
+    btn_fsck: Gtk.Button = Gtk.Template.Child()
+    row_reset: Adw.ActionRow = Gtk.Template.Child()
+    row_disks: Adw.ActionRow = Gtk.Template.Child()
+    row_shell: Adw.ActionRow = Gtk.Template.Child()
+    row_browser: Adw.ActionRow = Gtk.Template.Child()
+    row_fsck: Adw.ActionRow = Gtk.Template.Child()
+
+    btn_reset_cancel: Gtk.Button = Gtk.Template.Child()
+    btn_reset_confirm: Gtk.Button = Gtk.Template.Child()
+
+    btn_completed_cancel: Gtk.Button = Gtk.Template.Child()
+    btn_completed_restart: Gtk.Button = Gtk.Template.Child()
+
+    btn_fail_cancel: Gtk.Button = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.__build_ui()
+
+    def __build_ui(self):
+        self.btn_disclaimer_cancel.connect('clicked', self.__on_disclaimer_action)
+        self.btn_disclaimer_agree.connect('clicked', self.__on_disclaimer_action)
+
+    def __on_disclaimer_action(self, button: Gtk.Button):
+        if button == self.btn_disclaimer_cancel:
+            self.close()
+        elif button == self.btn_disclaimer_agree:
+            self.stack_main.set_visible_child_name('welcome')
+            self.headerbar.add_css_class('flat')
