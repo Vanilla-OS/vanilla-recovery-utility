@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=recovery-utility
-Exec=recovery-utility
+Name=Vanilla OS Recovery Utility
+Exec=vanilla-recovery-utility
 Icon=org.vanillaos.RecoveryUtility
 Terminal=false
 Type=Application
