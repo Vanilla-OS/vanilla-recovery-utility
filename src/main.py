@@ -24,46 +24,52 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
+from typing import Callable
+
 from .window import RecoveryUtilityWindow
 
 
 class RecoveryUtilityApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
-        super().__init__(application_id='org.vanillaos.RecoveryUtility',
-                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+    def __init__(self) -> None:
+        super().__init__(
+            application_id='org.vanillaos.RecoveryUtility',
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS
+        )
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         """Called when the application is activated.
 
         We raise the application's main window, creating it if
         necessary.
         """
-        win = self.props.active_window
+        win: RecoveryUtilityWindow = self.props.active_window
         if not win:
-            win = RecoveryUtilityWindow(application=self)
+            win: RecoveryUtilityWindow = RecoveryUtilityWindow(application=self)
         win.present()
 
-    def on_about_action(self, widget, _):
+    def on_about_action(self, *args) -> None:
         """Callback for the app.about action."""
-        about = Adw.AboutWindow(transient_for=self.props.active_window,
-                                application_name='recovery-utility',
-                                application_icon='org.vanillaos.RecoveryUtility',
-                                developer_name='Mirko',
-                                version='0.1.0',
-                                developers=['Mirko'],
-                                copyright='© 2023 Mirko')
+        about: Adw.AboutWindow = Adw.AboutWindow(
+            transient_for=self.props.active_window,
+            application_name='recovery-utility',
+            application_icon='org.vanillaos.RecoveryUtility',
+            developer_name='Mirko',
+            version='0.1.0',
+            developers=['Mirko Brombin'],
+            copyright='© 2023 Mirko Brombin and Vanilla OS Contributors'
+        )
         about.present()
 
-    def on_preferences_action(self, widget, _):
+    def on_preferences_action(self, *args) -> None:
         """Callback for the app.preferences action."""
         print('app.preferences action activated')
 
-    def create_action(self, name, callback, shortcuts=None):
+    def create_action(self, name: str, callback: Callable, shortcuts: list = None) -> None:
         """Add an application action.
 
         Args:
@@ -72,14 +78,14 @@ class RecoveryUtilityApplication(Adw.Application):
               activated
             shortcuts: an optional list of accelerators
         """
-        action = Gio.SimpleAction.new(name, None)
+        action: Gio.SimpleAction = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback)
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
 
-def main(version):
+def main(version: str) -> int:
     """The application's entry point."""
-    app = RecoveryUtilityApplication()
+    app: RecoveryUtilityApplication = RecoveryUtilityApplication()
     return app.run(sys.argv)
