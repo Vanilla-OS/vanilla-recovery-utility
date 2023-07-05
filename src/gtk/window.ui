@@ -39,7 +39,18 @@
                             <property name="buffer">
                               <object class="GtkTextBuffer" id="buffer_disclaimer">
                                 <property name="text">
-DISCLAIMER_GOES_HERE
+Vanilla OS Recovery Utility - Disclaimer
+Please read the following disclaimer carefully before using the utility.
+
+1. Intended Users: The utility is designed for advanced users or manufacturers who have knowledge and experience in system recovery procedures.
+
+2. Data Preservation: The utility provides an option to reset your installation while preserving your data. However, unforeseen circumstances or mistakes during the process can lead to data loss. It is highly recommended that you back up all important files and data before using the utility.
+
+3. Use at Your Own Risk: The utility is provided "as is" without warranty of any kind, either express or implied. The developers, suppliers, and distributors of the utility will not be liable for any loss or damage arising from its use.
+
+4. User Responsibility: By using the utility, you are fully responsible for any actions you take while using it. You agree to hold the developers, suppliers, and distributors of the utility harmless from any claims, damages, or liabilities arising out of your use of it.
+
+By clicking "Agree", you acknowledge that you have read and understood the above disclaimer and agree to its terms.
                                 </property>
                               </object>
                             </property>
@@ -94,9 +105,9 @@ DISCLAIMER_GOES_HERE
                               <object class="AdwActionRow" id="row_reset">
                                 <property name="title">Reinstall Vanilla OS</property>
                                 <property name="subtitle">This will reinstall Vanilla OS preserving your apps and personal data.</property>
-                                <property name="activatable-widget">btn_reset</property>
+                                <property name="activatable">true</property>
                                 <child type="suffix">
-                                  <object class="GtkButton" id="btn_reset">
+                                  <object class="GtkImage">
                                     <property name="icon-name">go-next-symbolic</property>
                                     <property name="valign">center</property>
                                     <style>
@@ -114,9 +125,9 @@ DISCLAIMER_GOES_HERE
                                   <object class="AdwActionRow" id="row_disks">
                                     <property name="title">Disks Utility</property>
                                     <property name="subtitle">Manage disks and partitions.</property>
-                                    <property name="activatable-widget">btn_disks</property>
+                                    <property name="activatable">true</property>
                                     <child type="suffix">
-                                      <object class="GtkButton" id="btn_disks">
+                                      <object class="GtkImage">
                                         <property name="icon-name">go-next-symbolic</property>
                                         <property name="valign">center</property>
                                         <style>
@@ -130,9 +141,9 @@ DISCLAIMER_GOES_HERE
                                   <object class="AdwActionRow" id="row_shell">
                                     <property name="title">Rescue Shell</property>
                                     <property name="subtitle">Launch a rescue shell in your system.</property>
-                                    <property name="activatable-widget">btn_shell</property>
+                                    <property name="activatable">true</property>
                                     <child type="suffix">
-                                      <object class="GtkButton" id="btn_shell">
+                                      <object class="GtkImage">
                                         <property name="icon-name">go-next-symbolic</property>
                                         <property name="valign">center</property>
                                         <style>
@@ -146,9 +157,9 @@ DISCLAIMER_GOES_HERE
                                   <object class="AdwActionRow" id="row_browser">
                                     <property name="title">Web Browser</property>
                                     <property name="subtitle">Read the documentation and search for solutions online.</property>
-                                    <property name="activatable-widget">btn_browser</property>
+                                    <property name="activatable">true</property>
                                     <child type="suffix">
-                                      <object class="GtkButton" id="btn_browser">
+                                      <object class="GtkImage">
                                         <property name="icon-name">go-next-symbolic</property>
                                         <property name="valign">center</property>
                                         <style>
@@ -162,9 +173,9 @@ DISCLAIMER_GOES_HERE
                                   <object class="AdwActionRow" id="row_fsck">
                                     <property name="title">Repair File System</property>
                                     <property name="subtitle">Check and repair the file system using "fsck".</property>
-                                    <property name="activatable-widget">btn_fsck</property>
+                                    <property name="activatable">true</property>
                                     <child type="suffix">
-                                      <object class="GtkButton" id="btn_fsck">
+                                      <object class="GtkImage">
                                         <property name="icon-name">go-next-symbolic</property>
                                         <property name="valign">center</property>
                                         <style>
@@ -192,7 +203,7 @@ DISCLAIMER_GOES_HERE
                   <object class="AdwStatusPage">
                     <property name="icon-name">view-refresh-symbolic</property>
                     <property name="title" translatable="true">Reinstall Vanilla OS</property>
-                    <property name="description" translatable="true">This will reinstall Vanilla OS preserving your apps and personal data.</property>
+                    <property name="description" translatable="true">This will reinstall Vanilla OS trying to preserve your apps and personal data.</property>
                     <child>
                       <object class="GtkBox">
                         <property name="halign">3</property>

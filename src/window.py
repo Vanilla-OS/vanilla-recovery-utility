@@ -17,8 +17,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-from gi.repository import Adw
-from gi.repository import Gtk
+from gi.repository import Gtk, Adw, GLib
+
 
 @Gtk.Template(resource_path='/org/vanillaos/RecoveryUtility/gtk/window.ui')
 class RecoveryUtilityWindow(Adw.ApplicationWindow):
@@ -30,11 +30,6 @@ class RecoveryUtilityWindow(Adw.ApplicationWindow):
     btn_disclaimer_cancel: Gtk.Button = Gtk.Template.Child()
     btn_disclaimer_agree: Gtk.Button = Gtk.Template.Child()
 
-    btn_reset: Gtk.Button = Gtk.Template.Child()
-    btn_disks: Gtk.Button = Gtk.Template.Child()
-    btn_shell: Gtk.Button = Gtk.Template.Child()
-    btn_browser: Gtk.Button = Gtk.Template.Child()
-    btn_fsck: Gtk.Button = Gtk.Template.Child()
     row_reset: Adw.ActionRow = Gtk.Template.Child()
     row_disks: Adw.ActionRow = Gtk.Template.Child()
     row_shell: Adw.ActionRow = Gtk.Template.Child()
@@ -56,6 +51,16 @@ class RecoveryUtilityWindow(Adw.ApplicationWindow):
     def __build_ui(self):
         self.btn_disclaimer_cancel.connect('clicked', self.__on_disclaimer_action)
         self.btn_disclaimer_agree.connect('clicked', self.__on_disclaimer_action)
+        self.row_browser.connect('activated', self.__on_browser_row_activate)
+        self.row_disks.connect('activated', self.__on_disks_row_activate)
+        self.row_fsck.connect('activated', self.__on_fsck_row_activate)
+        self.row_reset.connect('activated', self.__on_reset_row_activate)
+        self.row_shell.connect('activated', self.__on_shell_row_activate)
+        self.btn_reset_cancel.connect('clicked', self.__on_reset_action)
+        self.btn_reset_confirm.connect('clicked', self.__on_reset_action)
+        self.btn_completed_cancel.connect('clicked', self.__on_completed_action)
+        self.btn_completed_restart.connect('clicked', self.__on_completed_action)
+        self.btn_fail_cancel.connect('clicked', self.__on_fail_cancel)
 
     def __on_disclaimer_action(self, button: Gtk.Button):
         if button == self.btn_disclaimer_cancel:
@@ -63,3 +68,33 @@ class RecoveryUtilityWindow(Adw.ApplicationWindow):
         elif button == self.btn_disclaimer_agree:
             self.stack_main.set_visible_child_name('welcome')
             self.headerbar.add_css_class('flat')
+
+    def __on_browser_row_activate(self, row: Adw.ActionRow):
+        GLib.spawn_command_line_async('epiphany-browser https://handbook.vanillaos.org')
+
+    def __on_disks_row_activate(self, row: Adw.ActionRow):
+        GLib.spawn_command_line_async('gparted')
+
+    def __on_fsck_row_activate(self, row: Adw.ActionRow):
+        GLib.spawn_command_line_async('kgx -e echo "Not implemented yet"')
+
+    def __on_reset_row_activate(self, row: Adw.ActionRow):
+        self.stack_main.set_visible_child_name('reset')
+
+    def __on_shell_row_activate(self, row: Adw.ActionRow):
+        GLib.spawn_command_line_async('kgx')
+
+    def __on_reset_action(self, button: Gtk.Button):
+        if button == self.btn_reset_cancel:
+            self.stack_main.set_visible_child_name('welcome')
+        elif button == self.btn_reset_confirm:
+            self.stack_main.set_visible_child_name('completed')
+
+    def __on_completed_action(self, button: Gtk.Button):
+        if button == self.btn_completed_cancel:
+            self.stack_main.set_visible_child_name('welcome')
+        elif button == self.btn_completed_restart:
+            self.stack_main.set_visible_child_name('welcome')
+
+    def __on_fail_cancel(self, button: Gtk.Button):
+        self.stack_main.set_visible_child_name('welcome')
