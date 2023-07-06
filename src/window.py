@@ -51,11 +51,11 @@ class RecoveryUtilityWindow(Adw.ApplicationWindow):
     def __build_ui(self):
         self.btn_disclaimer_cancel.connect('clicked', self.__on_disclaimer_action)
         self.btn_disclaimer_agree.connect('clicked', self.__on_disclaimer_action)
-        self.row_browser.connect('activated', self.__on_browser_row_activate)
-        self.row_disks.connect('activated', self.__on_disks_row_activate)
-        self.row_fsck.connect('activated', self.__on_fsck_row_activate)
+        self.row_browser.connect('activated', self.__on_cmd_action, 'epiphany-browser https://handbook.vanillaos.org')
+        self.row_disks.connect('activated', self.__on_cmd_action, 'gparted')
+        self.row_fsck.connect('activated', self.__on_cmd_action, 'kgx -e echo "Not implemented yet"')
         self.row_reset.connect('activated', self.__on_reset_row_activate)
-        self.row_shell.connect('activated', self.__on_shell_row_activate)
+        self.row_shell.connect('activated', self.__on_shell_row_activate, 'kgx')
         self.btn_reset_cancel.connect('clicked', self.__on_reset_action)
         self.btn_reset_confirm.connect('clicked', self.__on_reset_action)
         self.btn_completed_cancel.connect('clicked', self.__on_completed_action)
@@ -69,20 +69,11 @@ class RecoveryUtilityWindow(Adw.ApplicationWindow):
             self.stack_main.set_visible_child_name('welcome')
             self.headerbar.add_css_class('flat')
 
-    def __on_browser_row_activate(self, row: Adw.ActionRow):
-        GLib.spawn_command_line_async('epiphany-browser https://handbook.vanillaos.org')
-
-    def __on_disks_row_activate(self, row: Adw.ActionRow):
-        GLib.spawn_command_line_async('gparted')
-
-    def __on_fsck_row_activate(self, row: Adw.ActionRow):
-        GLib.spawn_command_line_async('kgx -e echo "Not implemented yet"')
+    def __on_cmd_action(self, button: Gtk.Button, cmd: str):
+        GLib.spawn_command_line_async(cmd)
 
     def __on_reset_row_activate(self, row: Adw.ActionRow):
         self.stack_main.set_visible_child_name('reset')
-
-    def __on_shell_row_activate(self, row: Adw.ActionRow):
-        GLib.spawn_command_line_async('kgx')
 
     def __on_reset_action(self, button: Gtk.Button):
         if button == self.btn_reset_cancel:
